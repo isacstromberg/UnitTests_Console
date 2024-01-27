@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetworkUtility.DNS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -9,11 +10,26 @@ namespace NetworkUtility.Ping
 {
     public class NetworkService
     {
+        private readonly IDNS _dNS;
+
+        public NetworkService(IDNS dNS)
+        {
+            _dNS = dNS;
+        }
+
+
         public string SendPing()
         {
-            // SearchDNS();
-            //BuildPacket();
-            return "Success: Ping sent!";
+            var dnsSuccess =_dNS.SendDNS();
+            if(dnsSuccess)
+            {
+                return "Success: Ping Sent!";
+            }
+            else
+            {
+                return "Failed: Ping not sent!";
+            }
+            return "Success: Ping Sent!";
         }
 
 
